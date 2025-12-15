@@ -20,6 +20,7 @@ import com.example.calculate.SuperClass;
 import com.example.node.ClassMetrics;
 import com.example.node.MethodMetrics;
 
+import spoon.reflect.cu.SourcePosition;
 import spoon.reflect.declaration.CtClass;
 import spoon.reflect.declaration.CtMethod;
 import spoon.reflect.declaration.CtParameter;
@@ -127,14 +128,20 @@ public class Visitor extends CtScanner {
                 for (CtParameter param : methodParameter) {
                     parameters.add(param.getType().getQualifiedName());
                 }
-                pwMethod.print("\"" + method.getSimpleName() + "/" + parameters.size() + parameters + "\"");
+                pwMethod.print("\"" + method.getSimpleName() + "/" + parameters.size() + parameters
+                        + "\"");
                 for (String metric : metricOfMethod) {
                     pwMethod.print(",");
                     pwMethod.print(methodMetrics.getMetric(metric));
                 }
                 pwMethod.println();
             }
-            pwClass.print(clazz.getPosition().getFile().getPath());
+            if (clazz.getPosition() != null) {
+                SourcePosition position = clazz.getPosition();
+                if (position.getFile() != null) {
+                    pwClass.print(position.getFile().getPath());
+                }
+            }
             pwClass.print(",");
             pwClass.print(clazz.getQualifiedName());
             for (String metric : metricOfClass) {
@@ -147,23 +154,14 @@ public class Visitor extends CtScanner {
 
 }
 
-/*public void excuteMetrics() {
-        for (CtClass clazz : classesMetrics.keySet()) {
-            //if (Paths.get(clazz.getPosition().getFile().getAbsolutePath()).equals(Paths.get("C:/Users/syuuj/HikariCP/src/main/java/com/zaxxer/hikari/util/ConcurrentBag.java"))) {
-            ClassMetrics classMetrics = classesMetrics.get(clazz);
-            IAttribute superClass = new SuperClass();
-            superClass.calculate(classMetrics);
-            Set<CtMethod> methods = clazz.getMethods();
-            for (CtMethod method : methods) {
-                MethodMetrics methodMetrics = new MethodMetrics(method, classMetrics);
-                for (IAttribute metric : metricForMethod) {
-                    metric.calculate(methodMetrics);
-                }
-                classMetrics.getMethodsMetrics().add(methodMetrics);
-            }
-            for (IAttribute metric : metricForClass) {
-                metric.calculate(classMetrics);
-            }
-            //}
-        }
-    }*/
+/*
+ * public void excuteMetrics() { for (CtClass clazz : classesMetrics.keySet()) { //if
+ * (Paths.get(clazz.getPosition().getFile().getAbsolutePath()).equals(Paths.get(
+ * "C:/Users/syuuj/HikariCP/src/main/java/com/zaxxer/hikari/util/ConcurrentBag.java"))) {
+ * ClassMetrics classMetrics = classesMetrics.get(clazz); IAttribute superClass = new SuperClass();
+ * superClass.calculate(classMetrics); Set<CtMethod> methods = clazz.getMethods(); for (CtMethod
+ * method : methods) { MethodMetrics methodMetrics = new MethodMetrics(method, classMetrics); for
+ * (IAttribute metric : metricForMethod) { metric.calculate(methodMetrics); }
+ * classMetrics.getMethodsMetrics().add(methodMetrics); } for (IAttribute metric : metricForClass) {
+ * metric.calculate(classMetrics); } //} } }
+ */

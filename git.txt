@@ -1,0 +1,2 @@
+git log --all --name-only --pretty=format: | grep file⇒fileのパスを得れる
+git log --name-status "file"⇒fileの変更履歴
