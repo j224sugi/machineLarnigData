@@ -17,3 +17,6 @@ C:\Users\sugii syuji\gitProject\vert.x\src\main\java11\io\vertx\core\DeploymentO
 C:\Users\sugii syuji\gitProject\vert.x\src\main\java11\io\vertx\core\impl\LoaderManager.java
 C:\Users\sugii syuji\gitProject\vert.x\src\main\java\io\vertx\core\impl\LoaderManager.java
 C:\Users\sugii syuji\gitProject\vert.x\src\main\java\io\vertx\core\DeploymentOptions.java
+
+mybatis:initializer819が重複
+jenkins:copyで重複
